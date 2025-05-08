@@ -100,6 +100,18 @@ return function (App $app) {
             return $response->withHeader('Content-Type', 'application/json');
 
         });
+
+        // Consulta Obras
+        $group->get('/consulta_obras/{nome_municipio}', function (Request $request, Response $response, array $args) use ($url_api) {
+            $nome_municipio = $args['nome_municipio'];
+
+            $obras = file_get_contents($url_api . "/Obras!json?Municipio=".$nome_municipio);
+
+            $response->getBody()->write(mb_convert_encoding($obras, 'UTF-8', 'ISO-8859-1'));
+            return $response->withHeader('Content-Type', 'application/json');
+
+        });
+
     });
     
 };
